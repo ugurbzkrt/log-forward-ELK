@@ -1,0 +1,24 @@
+filebeat.inputs:
+  - type: container
+    paths:
+      - "/var/lib/docker/containers/*/*.log"
+#    json.keys_under_root: true
+#    json.add_error_key: true
+    processors:
+      - add_docker_metadata: ~
+
+output.elasticsearch:
+  hosts: ["http://stack.elk.io:9200"]     # Elastic server
+  username: "elastic"
+  password: "wE+8UcT8=m66toF718b6"
+  allow_older_versions: true
+
+setup.kibana:
+  host: "https://stack.elk.io"            # Kibana server
+
+setup.ilm.enabled: false
+
+processors:
+  - add_host_metadata: ~
+  - add_cloud_metadata: ~
+  - add_docker_metadata: ~

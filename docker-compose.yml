@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+  app:
+    image: your-app-image
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: "fluentd-server:24224" # server
+        tag: "app.logs"  # Logs Tag
+
+  fluentd:
+    image: fluent/fluentd
+    ports:
+      - "24224:24224"
+    volumes:
+      - ./fluentd.conf:/fluentd/etc/fluent.conf
